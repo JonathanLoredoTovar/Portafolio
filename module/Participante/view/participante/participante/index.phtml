@@ -1,0 +1,46 @@
+<?php $this->headTitle($this->titulo); ?>
+<div class="page-header">
+    <h1><?= $this->escapeHtml($this->titulo) ?></h1>
+</div>
+<p>
+    <a class = 'btn btn-default btn-xs' role = 'button'
+       href="<?= $this->url('participante', ['action' => 'crear']); ?>">crear (+)</a>
+</p>
+<table class="table table-bordered" style="width:700px;">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->usuarios as $usuario): ?>
+        <tr style="background-color:<?= $this->cycle(["#F0F0F0", "#FFFFFF"])->next() ?>">
+            <td><?= $usuario->getId() ?></td>
+            <td><?= $usuario->getNombre() ?></td>
+            <td><?= $usuario->getApellido() ?></td>
+            <td><?= $usuario->getEmail() ?></td>
+            <td><?= $usuario->getPassword() ?></td>
+            <td>
+                <a href="<?= $this->url('participante', ['action' => 'editar', 'id' => $usuario->getId()]) ?>"
+                   class='btn btn-primary btn-xs' role='button'>editar</a>
+            </td>
+
+            <td>
+                <a href="<?= $this->url('participante', ['action' => 'eliminar', 'id' => $usuario->getId()]) ?>"
+                   onclick="return confirm('¿Esta seguro que desea eliminar a <?= $usuario->getNombre() ?>?');"
+                   class='btn btn-danger btn-xs' role='button'>eliminar</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+    <?php
+    $this->cycle()->assign(["#F0F0F0", "#FFFFFF"]);
+    $this->cycle()->prev();
+    ?>
+</table>
